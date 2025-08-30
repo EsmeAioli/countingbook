@@ -1,0 +1,37 @@
+#COmments! 
+#THis file mimics the general structure of a github action <3 
+
+name: build_and_release
+
+#angular specific
+
+#Trigger 
+
+#on is an array, a - is an element in an array 
+#event: push (is one push, it can be speicfic to one branch)
+on: 
+- push 
+
+# one or more jobs 
+
+#Jobs are run sequentially (but if you toggle it: it can be in parallel too)
+jobs: #PLease group your job into logical steps 
+    build_deploy_dummy_name: #yeah what the fuck lmfao 
+        runs-on: ubuntu-latest #server/agent #autocomplete? (see screenshot)
+        steps: 
+        - id: s00 #Best practise: always give it an ID!!
+          # basically running some shell command 
+          run: echo "${{github.repository}}" 
+        # - id: s01 #Best practise: always give it an ID!!
+        #   # basically running some shell command 
+        #   run: echo "CURR_DATE=$(date)" >> ${GITHUB_OUTPUT}
+        # - id: s02
+        #   uses: mscoutermarsh/cowsays-action@master
+        #   with:
+        #       text: 'ship ship ship! ${{ steps.s01.outputs.CURR_DATE }} ${{github.ref}}, ${{github.repository}}'
+        #       color: 'red'
+        
+        
+        
+        # - id: s01 
+        #   run: pwd; ls -alh; ls .. -alh; find . -name 'just_create_a_file.txt'; cat ./just_create_a_file.txt
