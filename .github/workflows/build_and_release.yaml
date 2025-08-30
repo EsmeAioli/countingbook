@@ -36,3 +36,20 @@ jobs: #PLease group your job into logical steps
         - id: s03 
           uses: actions/checkout@v5 #which is why it needs to be checked out here #THis is your bread and butter of the github step 
         - run: echo "After" && ls -la 
+        - id: s04
+        #install Angular cli and install packages from package.json 
+        #(Note the common convention in the && in all the bash -- the conventions still stays: the exit code determines whether the && continues to the next step: 0 is good, exit 1 -- FAKES THE ERROR CODE Oooo)
+          run: npm i -g @angular/cli && npm ci
+        - id: s05 
+        #build the application
+          run: ng build
+        - id: s06
+          run: ls /dist/countingbook/browser 
+        - id: s07
+          uses: nwtgck/actions-netlify@v3.0
+          with: 
+            publish-dir: /dist/countingbook/browser 
+            production-deploy: true 
+          env:
+            NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+            NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
