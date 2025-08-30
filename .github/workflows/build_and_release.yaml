@@ -12,26 +12,27 @@ name: build_and_release
 on: 
 - push 
 
+#alternatively
+# on: [push]
+
 # one or more jobs 
 
 #Jobs are run sequentially (but if you toggle it: it can be in parallel too)
 jobs: #PLease group your job into logical steps 
-    build_deploy_dummy_name: #yeah what the fuck lmfao 
+    build_app: #yeah what the fuck lmfao 
         runs-on: ubuntu-latest #server/agent #autocomplete? (see screenshot)
         steps: 
         - id: s00 #Best practise: always give it an ID!!
           # basically running some shell command 
-          run: echo "${{github.repository}}" 
-        # - id: s01 #Best practise: always give it an ID!!
-        #   # basically running some shell command 
-        #   run: echo "CURR_DATE=$(date)" >> ${GITHUB_OUTPUT}
-        # - id: s02
-        #   uses: mscoutermarsh/cowsays-action@master
-        #   with:
-        #       text: 'ship ship ship! ${{ steps.s01.outputs.CURR_DATE }} ${{github.ref}}, ${{github.repository}}'
-        #       color: 'red'
-        
-        
-        
-        # - id: s01 
-        #   run: pwd; ls -alh; ls .. -alh; find . -name 'just_create_a_file.txt'; cat ./just_create_a_file.txt
+          run: echo "${{github.repository}}"
+        - run: echo "Before" && ls -la
+        - id: s02 #Set up the environment (Microservice: separate the build across dependencies)
+          uses: actions/setup-node@v4
+          with:
+            # Version Spec of the version to use in SemVer notation.
+            # It also admits such aliases as lts/*, latest, nightly and canary builds
+            # Examples: 12.x, 10.15.1, >=10.15.0, lts/Hydrogen, 16-nightly, latest, node
+            node-version: '24.x'
+        - id: s03 
+          uses: actions/checkout@v5 
+        - run: echo "After" && ls -la 
