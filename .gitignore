@@ -36,6 +36,7 @@ yarn-error.log
 /libpeerconnection.log
 testem.log
 /typings
+/act_Linux_x86_64
 
 # System files
 .DS_Store
